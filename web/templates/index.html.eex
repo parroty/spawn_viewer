@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Spawn Viewer</title>
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
+  <style type="text/css">
+    .progress-bar.animate {
+      width: 100%;
+    }
+
+    .round-border {
+      padding: 10px;
+      border: solid 3px #aaaaaa;
+      border-radius: 7px;
+    }
+
+    #example-container {
+      display: none;
+    }
+
+    #example {
+      width: 100%;
+    }
+
+  </style>
+
+  <script src="/static/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['timeline']}]}"></script>
+  <script type="text/javascript">
+
+  var animationDelay = 400;
+
+  function getSelectedID() {
+    return $('.active').first().attr('id');
+  }
+
+  function getSelectedName() {
+    return $('.active').first().text();
+  }
+
+  function updateSelectedCode() {
+    updateCode($('#code'), getSelectedID());
+  }
+
+  function updateBaseCode() {
+    updateCode($('#base-code'), 'Base');
+  }
+
+  function updateCode(element, id) {
+    $.ajax({
+      url: "/code/" + id,
+      dataType: "text",
+    }).done(function(code) {
+      element.html(hljs.highlight("elixir", code).value);
+    });
+  }
+
+  function drawChart() {
+    $('#modal-title').html('Executing ' + getSelectedName() + '.run ...');
+
+    var $modal = $('.js-loading-bar');
+    $bar = $modal.find('.progress-bar');
+    $modal.modal('show');
+    $bar.addClass('animate');
+
+    var container = document.getElementById('example');
+    var chart = new google.visualization.Timeline(container);
+    var jsonData = $.ajax({
+      url: "/analyze/" + getSelectedID(),
+      dataType: "json",
+    }).done(function(jsonData) {
+      $('#example-container').show(animationDelay, function() {
+        var dataTable = new google.visualization.DataTable(jsonData);
+        $('#example').height(dataTable.getNumberOfRows() * 41 + 50);
+        chart.draw(dataTable);
+
+        $bar.removeClass('animate');
+        $modal.modal('hide');
+      });
+    });
+  };
+
+  $(document).ready(function() {
+    // initialize loading dialog
+    $('.js-loading-bar').modal({
+      backdrop: 'static',
+      show: false
+    });
+
+    $('#btn-update').click(function(){
+      drawChart();
+    });
+
+    $('.list-item').click(function() {
+      $('#btn-update').attr('disabled', true);
+      $('.list-item').removeClass('active');
+      $(this).addClass('active');
+      $('#example-container').hide(animationDelay, function() {
+        updateSelectedCode();
+        $('#btn-update').attr('disabled', false);
+      });
+    });
+
+    // select default list item
+    $('.list-item:first').addClass('active');
+    updateSelectedCode();
+    updateBaseCode();
+  });
+
+  </script>
+</head>
+<body>
+  <h3>Spawn Viewer</h3>
+
+  <div class="container-fluid">
+    <div class="col-md-3 round-border">
+      <h4>Functions</h4>
+      <ul class="nav nav-pills nav-stacked">
+        <%= lc function inlist @functions do %>
+          <li class="list-item" id="<%= function[:name] %>"><a href="#"><%= function[:name] %></a></li>
+        <% end %>
+      </ul>
+
+      <br/><br/>
+      <a id="btn-update" class="btn btn-success" role="button">Execute</a>
+    </div>
+
+    <div class="col-md-9 round-border">
+      <div id="example-container">
+        <h4>Results</h4>
+        <div id="example"></div>
+      </div>
+
+      <h4>Code</h4>
+      <pre><div id="code"></div></pre>
+
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                View Runner.Base Code
+              </a>
+            </h4>
+          </div>
+          <div id="collapseThree" class="panel-collapse collapse">
+            <div class="panel-body">
+              <pre><div id="base-code">This content should not be visible.</div></pre>
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal js-loading-bar">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 id="modal-title">Executing...</h3>
+        </div>
+
+        <div class="modal-body">
+          <div class="progress progress-striped active">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
