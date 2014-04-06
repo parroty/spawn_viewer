@@ -8,8 +8,11 @@ Trial implementation to visualize process spawning.
 $ git clone https://github.com/parroty/spawn_viewer
 $ cd spawn_viewer
 $ mix deps.get
+$ mix compile
 $ mix server
 ```
+
+Then, open `http://localhost:4000` in the browser.
 
 ## Sample
 
