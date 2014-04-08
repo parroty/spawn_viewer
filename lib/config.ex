@@ -8,7 +8,8 @@ defmodule Config do
       [name: "RandomSleep",  module: Runner.RandomSleep,  target: true],
       [name: "Chain",        module: Runner.Chain,        target: true],
       [name: "ParallelHttp", module: Runner.ParallelHttp, target: true],
-      [name: "BinaryTree",   module: Runner.BinaryTree,   target: true] ]
+      [name: "BinaryTree",   module: Runner.BinaryTree,   target: true],
+      [name: "Poolboy",      module: Runner.Poolboy,   target: true] ]
   end
 
   def target_modules do

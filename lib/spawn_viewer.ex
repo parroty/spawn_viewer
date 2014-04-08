@@ -8,6 +8,7 @@ defmodule SpawnViewer do
   def start(_type, _args) do
     HTTPotion.start
     Store.start
+    Runner.Poolboy.Supervisor.start_link
     SpawnViewer.Dynamo.start_link([max_restarts: 5, max_seconds: 5])
   end
 

@@ -22,6 +22,7 @@ defmodule SpawnViewer.Mixfile do
       { :timex, github: "bitwalker/timex"},
       { :exactor, github: "sasa1977/exactor"},
       { :jsex, github: "talentdeficit/jsex"},
-      { :httpotion, github: "myfreeweb/httpotion"} ]
+      { :httpotion, github: "myfreeweb/httpotion"},
+      { :poolboy, github: "devinus/poolboy"} ]
   end
 end
