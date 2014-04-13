@@ -34,7 +34,7 @@ defmodule Parser do
   def count_row(records) do
     Enum.reduce(records, 0.0, fn(record, acc) ->
       if record.events do
-        acc + 1.7  # add offsets for additional row
+        acc + 1.75  # add offsets for additional row
       else
         acc + 1
       end
