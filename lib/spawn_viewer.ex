@@ -33,7 +33,8 @@ defmodule SpawnViewer do
     Enum.map(dict.keys, fn(pid) ->
       item = HashDict.get(dict, pid)
       PlotItem.new(name: inspect(pid), tag: item[:tag],
-                   start_time: format_time(item[:start]), end_time: format_time(item[:end]))
+                   start_time: format_time(item[:start]), end_time: format_time(item[:end]),
+                   events: format_events(item[:events]))
     end)
   end
 
@@ -43,5 +44,15 @@ defmodule SpawnViewer do
 
   defp format_time({_, _, microsec} = time) do
     Timex.Date.from(:calendar.now_to_universal_time(time)).update(ms: Float.floor(microsec / 1000))
+  end
+
+  defp format_events(nil) do
+    nil
+  end
+
+  defp format_events(events) do
+    Enum.map(events, fn({time, marker}) ->
+      {format_time(time), marker}
+    end)
   end
 end

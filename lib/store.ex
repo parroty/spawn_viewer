@@ -9,6 +9,18 @@ defmodule Store do
     do_append(dict, pid, event, time, tag) |> new_state
   end
 
+  defcast append_marker(pid, time, marker), state: dict do
+    case HashDict.fetch(dict, pid) do
+      {:ok, item} ->
+        current_events = item[:events] || []
+        updated_events = [{time, marker}|current_events]
+        updated_item   = Keyword.merge(item, [events: updated_events])
+        HashDict.put(dict, pid, updated_item) |> new_state
+      {:error} ->
+        raise "Store.append_marker should be called for already registered pid item."
+    end
+  end
+
   defcall get(pid), state: dict, do: reply(HashDict.get(dict, pid))
   defcall all, state: dict, do: reply(dict)
 

@@ -30,6 +30,10 @@ defmodule Runner.Base do
         Store.append(actor, pid, :end, :erlang.now)
       end
 
+      def event_marker(actor, pid, marker) do
+        Store.append_marker(actor, pid, :erlang.now, marker)
+      end
+
       def wait_events(n) do
         if n > 0 do
           receive do

@@ -15,6 +15,8 @@ defmodule Runner.Poolboy do
         event_start(actor, self, tag: n)
 
         worker = :poolboy.checkout(:mypool)
+        event_marker(actor, self, "checkout")
+
         :timer.sleep(2 * config[:delay])
         reply = :gen_server.call worker, :greet
         send parent, {self, reply}

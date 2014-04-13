@@ -21,8 +21,8 @@ defmodule ApplicationRouter do
     records = SpawnViewer.run(conn.params[:id])
     items = Parser.parse(records)
 
-    data = [{"cols", [[type: "string", id: "Name"],
-                      [type: "string", id: "Tag"],
+    data = [{"cols", [[type: "string", id: "Position"],
+                      [type: "string", id: "Name"],
                       [type: "date", id: "Start"],
                       [type: "date", id: "End"]]},
             {"rows", items},
