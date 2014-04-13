@@ -34,7 +34,7 @@
   <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['timeline']}]}"></script>
   <script type="text/javascript">
 
-  var animationDelay = 400;
+  var animationDelay = 200;
 
   function getSelectedID() {
     return $('.active').first().attr('id');
@@ -71,11 +71,12 @@
 
     var container = document.getElementById('example');
     var chart = new google.visualization.Timeline(container);
+
     var jsonData = $.ajax({
       url: "/analyze/" + getSelectedID(),
       dataType: "json",
     }).done(function(jsonData) {
-      $('#example-container').show(animationDelay, function() {
+      $('#example-container').show(0, function() {
         var dataTable = new google.visualization.DataTable(jsonData["data"]);
         $('#example').height(jsonData["counts"] * 41 + 50);
         chart.draw(dataTable);
