@@ -8,12 +8,11 @@ defmodule Runner.TimeoutAfter do
   @count 5
 
   def run(actor) do
-    parent = self
     event_start(actor, self, tag: "Parent")
 
     child = spawn_link(fn ->
       event_start(actor, self, tag: "Child")
-      receive_message(actor, parent)
+      receive_message(actor)
       event_end(actor, self)
     end)
 
@@ -24,7 +23,7 @@ defmodule Runner.TimeoutAfter do
     event_end(actor, self)
   end
 
-  def receive_message(actor, pid) do
+  def receive_message(actor) do
     receive do
       {:ok, pid} ->
         event_marker(actor, self, "completed")
@@ -33,7 +32,7 @@ defmodule Runner.TimeoutAfter do
     after
       config[:delay] ->
         event_marker(actor, self, "timeout")
-        receive_message(actor, self)
+        receive_message(actor)
     end
   end
 end
