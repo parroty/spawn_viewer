@@ -21,6 +21,7 @@ defmodule Runner.Chain do
 
     receive do
       n ->
+        event_marker(actor, self, "receive #{n}")
         :timer.sleep(config[:delay])
         send next_pid, n + 1
     end
