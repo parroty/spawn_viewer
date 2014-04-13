@@ -9,7 +9,8 @@ defmodule Config do
       [name: "Chain",        module: Runner.Chain,        target: true],
       [name: "ParallelHttp", module: Runner.ParallelHttp, target: true],
       [name: "BinaryTree",   module: Runner.BinaryTree,   target: true],
-      [name: "Poolboy",      module: Runner.Poolboy,   target: true] ]
+      [name: "Poolboy",      module: Runner.Poolboy,      target: true],
+      [name: "PingPong",     module: Runner.PingPong,     target: true] ]
   end
 
   def target_modules do
