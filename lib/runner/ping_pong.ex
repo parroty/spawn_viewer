@@ -7,6 +7,7 @@ defmodule Runner.PingPong do
 
   def run(actor) do
     parent = self
+    event_start(actor, self, tag: "Parent")
 
     child = spawn_link(fn ->
       event_start(actor, self, tag: "Child")
@@ -14,7 +15,6 @@ defmodule Runner.PingPong do
       receive_message(parent, actor)
     end)
 
-    event_start(actor, self, tag: "Parent")
     receive_message(child, actor)
   end
 
