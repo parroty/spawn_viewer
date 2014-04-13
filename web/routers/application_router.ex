@@ -28,7 +28,7 @@ defmodule ApplicationRouter do
             {"rows", items},
             {"p", nil}]
 
-    conn.resp 200, data |> JSEX.encode!
+    conn.resp 200, [counts: Parser.count_row(records), data: data] |> JSEX.encode!
   end
 
   get "/code/:id" do

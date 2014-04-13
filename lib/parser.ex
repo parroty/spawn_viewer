@@ -26,4 +26,18 @@ defmodule Parser do
   defp parse_date(date) do
     "Date(#{date.year}, #{date.month}, #{date.day}, #{date.hour}, #{date.minute}, #{date.second}, #{date.ms})"
   end
+
+  @doc """
+  Count row items for display purpose.
+  Add offsets if there're registered events as they're displayed as multi-row.
+  """
+  def count_row(records) do
+    Enum.reduce(records, 0.0, fn(record, acc) ->
+      if record.events do
+        acc + 1.7  # add offsets for additional row
+      else
+        acc + 1
+      end
+    end)
+  end
 end

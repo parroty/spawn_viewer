@@ -76,8 +76,8 @@
       dataType: "json",
     }).done(function(jsonData) {
       $('#example-container').show(animationDelay, function() {
-        var dataTable = new google.visualization.DataTable(jsonData);
-        $('#example').height(dataTable.getNumberOfRows() * 41 + 50);
+        var dataTable = new google.visualization.DataTable(jsonData["data"]);
+        $('#example').height(jsonData["counts"] * 41 + 50);
         chart.draw(dataTable);
 
         $bar.removeClass('animate');
