@@ -12,7 +12,7 @@ $ mix compile
 $ mix server
 ```
 
-Then, open `http://localhost:4000` in the browser.
+Then, open `http://localhost:4000` in the browser. In the browser, select a function and click `Execute` to draw the graph.
 
 ## Sample
 
@@ -47,3 +47,9 @@ defmodule Runner.ParallelHttp do
   end
 end
 ```
+
+## Notes
+- `Runner.Base` module defines some helper functions to trigger events for the monitoring.
+  - `event_start` and `event_end` functions take a pid (ex. self) to monitor, and a actor to store the monitoring results (which is passed as `run` function argument).
+  - `event_marker` function allows to put a marker in the graph for the pid and the timing.
+- `:timer.sleep` call is inserted for some locations for graph visualization purpose.
