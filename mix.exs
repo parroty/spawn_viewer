@@ -18,7 +18,7 @@ defmodule SpawnViewer.Mixfile do
 
   defp deps do
     [ { :cowboy, github: "extend/cowboy" },
-      { :dynamo, "~> 0.1.0-dev", github: "elixir-lang/dynamo" },
+      { :dynamo, "~> 0.1.0-dev", github: "dynamo/dynamo" },
       { :timex, github: "bitwalker/timex"},
       { :exactor, github: "sasa1977/exactor"},
       { :jsex, github: "talentdeficit/jsex"},
