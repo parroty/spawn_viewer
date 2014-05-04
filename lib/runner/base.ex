@@ -19,14 +19,17 @@ defmodule Runner.Base do
       end
       defoverridable [run: 1]
 
-      def event_start(actor, pid, options) do
+      def event_start(actor, pid, options \\ []) do
         Store.append(actor, pid, :start, :erlang.now, options[:tag])
         if options[:delay] do
           :timer.sleep(config[:delay])
         end
       end
 
-      def event_end(actor, pid) do
+      def event_end(actor, pid, options \\ []) do
+        if options[:delay] do
+          :timer.sleep(config[:delay])
+        end
         Store.append(actor, pid, :end, :erlang.now)
       end
 

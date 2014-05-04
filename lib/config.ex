@@ -11,7 +11,8 @@ defmodule Config do
       [name: "BinaryTree",   module: Runner.BinaryTree,   target: true],
       [name: "Poolboy",      module: Runner.Poolboy,      target: true],
       [name: "PingPong",     module: Runner.PingPong,     target: true],
-      [name: "TimeoutAfter", module: Runner.TimeoutAfter, target: true] ]
+      [name: "TimeoutAfter", module: Runner.TimeoutAfter, target: true],
+      [name: "Stream",       module: Runner.Stream,       target: true] ]
   end
 
   def target_modules do
