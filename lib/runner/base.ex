@@ -45,10 +45,12 @@ defmodule Runner.Base do
       @doc """
       Wait specified number of messages to receive. Message itself will be discarded.
       """
-      def wait_events(n) do
+      def wait_events(n, timeout \\ 30_000) do
         if n > 0 do
           receive do
             _ -> wait_events(n - 1)
+          after
+            timeout -> nil
           end
         end
       end
