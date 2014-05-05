@@ -17,9 +17,9 @@ defmodule Runner.MapReducer do
         generate_reducer(&loose_order_reducer/2, actor, parent) ]
 
     # initiate parallel mapper.
-    pids = Enum.map(randomly_sorted_values, fn(value) ->
+    pids = Enum.map(randomly_sorted_values, fn({value, index}) ->
       spawn_link(fn ->
-        event_start(actor, self, tag: value)
+        event_start(actor, self, tag: "#{index} (#{value} sec)")
 
         :timer.sleep(value * config[:delay])
         Enum.each(reducers, &(send &1, {self, value}))
@@ -36,6 +36,7 @@ defmodule Runner.MapReducer do
   defp randomly_sorted_values do
     :random.seed(:erlang.now)
     Enum.sort(1..config[:counts], fn(_,_) -> :random.uniform > 0.5 end)
+      |> Enum.zip(1..config[:counts])
   end
 
   defp generate_reducer(reducer, actor, parent) do

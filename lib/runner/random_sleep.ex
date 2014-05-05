@@ -13,7 +13,7 @@ defmodule Runner.RandomSleep do
 
     Enum.each(values, fn(v) ->
       spawn_link(fn ->
-        event_start(actor, self, tag: v)
+        event_start(actor, self, tag: "#{v} sec")
 
         :timer.sleep(v * config[:delay])
         send parent, {self, v}
