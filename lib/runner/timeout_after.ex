@@ -1,6 +1,8 @@
 defmodule Runner.TimeoutAfter do
   @moduledoc """
   Spawn process to wait a message with after keyword.
+  The logic in the `after` section is regularly executed until the
+  completion message is received from the child.
   """
 
   use Runner.Base

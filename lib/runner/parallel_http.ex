@@ -1,6 +1,7 @@
 defmodule Runner.ParallelHttp do
   @moduledoc """
   Spawn processes which sends http get requests.
+  The reqeusts are executed in parallel.
   """
 
   use Runner.Base

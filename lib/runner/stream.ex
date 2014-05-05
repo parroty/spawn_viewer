@@ -1,6 +1,8 @@
 defmodule Runner.Stream do
   @moduledoc """
   Spawn processes to calculate value through stream and enum.
+  Stream iteratively processes each value in the list,
+  and Enum waits for the entire list to complete.
   """
 
   use Runner.Base
@@ -38,9 +40,14 @@ defmodule Runner.Stream do
     send pid, :ok
   end
 
-  defp calc_next(value, actor) do
+  @doc """
+  After putting delay/marker, returns the next value
+  (e.g. 1 -> 11, 2 -> 22).
+  """
+  def calc_next(value, actor) do
     :timer.sleep(config[:delay])
     event_marker(actor, self, "#{value}")
+
     10 * value + value
   end
 end
