@@ -17,7 +17,7 @@ defmodule Runner.Stream do
   end
 
   defp process_stream(range, actor, pid) do
-    event_start(actor, self, tag: "stream")
+    event_start(actor, self, tag: "Stream")
 
     range
       |> Stream.map(&calc_next(&1, actor))
@@ -29,7 +29,7 @@ defmodule Runner.Stream do
   end
 
   defp process_enum(range, actor, pid) do
-    event_start(actor, self, tag: "enum")
+    event_start(actor, self, tag: "Enum")
 
     range
       |> Enum.map(&calc_next(&1, actor))
@@ -45,7 +45,7 @@ defmodule Runner.Stream do
   (e.g. 1 -> 11, 2 -> 22).
   """
   def calc_next(value, actor) do
-    :timer.sleep(config[:delay])
+    insert_delay
     event_marker(actor, self, "#{value}")
 
     10 * value + value

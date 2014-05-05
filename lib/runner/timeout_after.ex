@@ -29,7 +29,7 @@ defmodule Runner.TimeoutAfter do
     receive do
       {:ok, pid} ->
         event_marker(actor, self, "completed")
-        :timer.sleep(config[:delay])
+        insert_delay
         send pid, :ok
     after
       config[:delay] ->

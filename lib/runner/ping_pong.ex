@@ -24,7 +24,7 @@ defmodule Runner.PingPong do
         event_end(actor, pid)
       count ->
         event_marker(actor, self, "receive #{count}")
-        :timer.sleep(config[:delay])
+        insert_delay
 
         send pid, count - 1
         receive_message(pid, actor)
