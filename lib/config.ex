@@ -12,7 +12,8 @@ defmodule Config do
       [name: "Poolboy",      module: Runner.Poolboy                   ],
       [name: "PingPong",     module: Runner.PingPong                  ],
       [name: "TimeoutAfter", module: Runner.TimeoutAfter              ],
-      [name: "Stream",       module: Runner.Stream                    ] ]
+      [name: "Stream",       module: Runner.Stream                    ],
+      [name: "MapReducer",   module: Runner.MapReducer                ] ]
   end
 
   def target_modules do
