@@ -133,13 +133,16 @@ defmodule Runner.Supervisor.Stash do
     {:reply, current, current}
   end
 
-  def handle_cast({:put, {actor, number}}, current) do
-    if current == @default_value do
-      event_start(actor, self, tag: "Stash")
-      event_marker(actor, self, "setup")
-    else
-      event_marker(actor, self, "put #{number}")
-    end
+  def handle_cast({:put, {actor, number}}, _current) do
+    event_marker(actor, self, "put #{number}")
+
+    {:noreply, {actor, number}}
+  end
+
+  def handle_cast({:setup, {actor, number}}, _current) do
+    event_start(actor, self, tag: "Stash")
+    event_marker(actor, self, "setup")
+
     {:noreply, {actor, number}}
   end
 end
@@ -172,7 +175,7 @@ defmodule Runner.Supervisor.Worker do
     event_start(actor, self, tag: "Worker")
     event_marker(actor, self, "setup")
 
-    :gen_server.cast(:supervise_stash, {:put, {actor, number}})
+    :gen_server.cast(:supervise_stash, {:setup, {actor, number}})
     {:noreply, {actor, number}}
   end
 

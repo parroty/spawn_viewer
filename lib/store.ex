@@ -17,7 +17,7 @@ defmodule Store do
         updated_item   = Keyword.merge(item, [events: updated_events])
         HashDict.put(dict, pid, updated_item) |> new_state
       {:error} ->
-        raise "Store.append_marker should be called for already registered pid item."
+        raise RuntimeError.new(message: "Store.append_marker should be called for already registered pid item.")
     end
   end
 
