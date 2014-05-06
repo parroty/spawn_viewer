@@ -168,7 +168,7 @@ defmodule Runner.Supervisor.Worker do
     {:ok, {{actor, number}, stash_pid}}
   end
 
-  def handle_cast({:setup, actor}, current = {_, stash_pid}) do
+  def handle_cast({:setup, actor}, {_, stash_pid}) do
     event_start(actor, self, tag: "Worker")
     event_marker(actor, self, "setup")
 
@@ -176,14 +176,14 @@ defmodule Runner.Supervisor.Worker do
     {:noreply, {{actor, 0}, stash_pid}}
   end
 
-  def handle_call(:call, _from, current = {{actor, number}, stash_pid}) do
+  def handle_call(:call, _from, {{actor, number}, stash_pid}) do
     event_marker(actor, self, "call")
 
     :gen_server.cast(stash_pid, {:put, {actor, number + 1}})
     {:reply, :call, {{actor, number + 1}, stash_pid}}
   end
 
-  def handle_call(:crash, _from, {{actor, number}, stash_pid}) do
+  def handle_call(:crash, _from, {{actor, _number}, _stash_pid}) do
     event_marker(actor, self, "crash")
     event_end(actor, self)
 
