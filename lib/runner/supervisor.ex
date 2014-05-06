@@ -14,7 +14,7 @@ defmodule Runner.Supervisor do
     setup_stash(actor)
     parent = self
 
-    process_child(actor, parent, [name: "Child (Crash)", crash: true])
+    process_child(actor, parent, [name: "Child (Crash)",  crash: true])
     process_child(actor, parent, [name: "Child (Normal)", crash: false])
 
     event_end(actor, self, delay: true)
@@ -22,7 +22,7 @@ defmodule Runner.Supervisor do
 
   defp setup_stash(actor) do
     event_marker(actor, self, "setup")
-    :gen_server.cast(:supervise_worker, {:setup, actor})
+    :gen_server.cast(:supervise_worker, {:setup, {actor, 0}})
     insert_delay
   end
 
@@ -37,7 +37,7 @@ defmodule Runner.Supervisor do
 
       send_normal_message(actor)
 
-      send parent, {self, :ok}
+      send(parent, {self, :ok})
 
       event_marker(actor, self, "reply")
       event_end(actor, self)
@@ -83,12 +83,12 @@ defmodule Runner.Supervisor.Sup do
   end
 
   def start_workers(sup) do
-    {:ok, stash} = :supervisor.start_child(sup, worker(Runner.Supervisor.Stash, []))
-    :supervisor.start_child(sup, supervisor(Runner.Supervisor.SubSup, [stash]))
+    {:ok, _stash} = :supervisor.start_child(sup, worker(Runner.Supervisor.Stash, []))
+    :supervisor.start_child(sup, supervisor(Runner.Supervisor.SubSup, []))
   end
 
   def init([]) do
-    supervise [], strategy: :one_for_one
+    supervise([], strategy: :one_for_one)
   end
 end
 
@@ -99,13 +99,13 @@ defmodule Runner.Supervisor.SubSup do
 
   use Supervisor.Behaviour
 
-  def start_link(stash_pid) do
-    :supervisor.start_link(__MODULE__, stash_pid)
+  def start_link do
+    :supervisor.start_link(__MODULE__, [])
   end
 
-  def init(stash_pid) do
-    children = [ worker(Runner.Supervisor.Worker, [stash_pid]) ]
-    supervise children, strategy: :one_for_one
+  def init(_) do
+    children = [ worker(Runner.Supervisor.Worker, []) ]
+    supervise(children, strategy: :one_for_one)
   end
 end
 
@@ -152,43 +152,43 @@ defmodule Runner.Supervisor.Worker do
   use GenServer.Behaviour
   use Runner.Base
 
-  def start_link(stash_pid) do
+  def start_link do
     :gen_server.start_link(
-      {:local, :supervise_worker}, __MODULE__, stash_pid, [])
+      {:local, :supervise_worker}, __MODULE__, [], [])
   end
 
-  def init(stash_pid) do
-    {actor, number} = :gen_server.call(stash_pid, :get)
+  def init(_) do
+    {actor, number} = :gen_server.call(:supervise_stash, :get)
 
     if actor do
       event_start(actor, self, tag: "Worker")
       event_marker(actor, self, "restart")
     end
 
-    {:ok, {{actor, number}, stash_pid}}
+    {:ok, {actor, number}}
   end
 
-  def handle_cast({:setup, actor}, {_, stash_pid}) do
+  def handle_cast({:setup, {actor, number}}, _) do
     event_start(actor, self, tag: "Worker")
     event_marker(actor, self, "setup")
 
-    :gen_server.cast(stash_pid, {:put, {actor, 0}})
-    {:noreply, {{actor, 0}, stash_pid}}
+    :gen_server.cast(:supervise_stash, {:put, {actor, number}})
+    {:noreply, {actor, number}}
   end
 
-  def handle_call(:call, _from, {{actor, number}, stash_pid}) do
+  def handle_call(:call, _from, {actor, number}) do
     event_marker(actor, self, "call")
 
-    :gen_server.cast(stash_pid, {:put, {actor, number + 1}})
-    {:reply, :call, {{actor, number + 1}, stash_pid}}
+    :gen_server.cast(:supervise_stash, {:put, {actor, number + 1}})
+    {:reply, :call, {actor, number + 1}}
   end
 
-  def handle_call(:crash, _from, {{actor, _number}, _stash_pid}) do
+  def handle_call(:crash, _from, {actor, _number}) do
     event_marker(actor, self, "crash")
     event_end(actor, self)
 
     divide(1, 0)
-    {:reply, :crash, nil} # should not reach here
+    {:reply, :crash, nil}  # should not reach here
   end
 
   defp divide(a, b) do
