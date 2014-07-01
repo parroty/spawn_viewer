@@ -17,7 +17,7 @@ defmodule SpawnViewer do
     {:ok, actor} = Store.start
 
     parent = self
-    pid = spawn_link(fn ->
+    spawn_link(fn ->
       find_module(id).run(actor)
       send parent, :ok
     end)
