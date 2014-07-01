@@ -48,7 +48,8 @@ defmodule Runner.Base do
       def wait_events(n, timeout \\ 30_000) do
         if n > 0 do
           receive do
-            _ -> wait_events(n - 1)
+            _ ->
+              wait_events(n - 1)
           after
             timeout -> nil
           end

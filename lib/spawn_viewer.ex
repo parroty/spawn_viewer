@@ -1,5 +1,5 @@
 defmodule SpawnViewer do
-  use Application.Behaviour
+  use Application
 
   @doc """
   The application callback used to start this
@@ -10,13 +10,29 @@ defmodule SpawnViewer do
     Store.start
     Runner.Poolboy.Supervisor.start_link
     Runner.Supervisor.Sup.start_link([])
-    SpawnViewer.Dynamo.start_link([max_restarts: 5, max_seconds: 5])
+    SpawnViewer.Supervisor.start_link
   end
 
   def run(id) do
     {:ok, actor} = Store.start
-    find_module(id).run(actor)
+
+    parent = self
+    pid = spawn_link(fn ->
+      find_module(id).run(actor)
+      send parent, :ok
+    end)
+    wait_completion
+
     format_item(Store.all(actor))
+  end
+
+  defp wait_completion do
+    receive do
+      {:plug_conn, _}
+        -> wait_completion
+      :ok
+        -> nil
+    end
   end
 
   def get_code(id) do
@@ -33,9 +49,9 @@ defmodule SpawnViewer do
   defp format_item(dict) do
     Enum.map(HashDict.keys(dict), fn(pid) ->
       item = HashDict.get(dict, pid)
-      PlotItem.new(name: inspect(pid), tag: item[:tag],
+      %PlotItem{name: inspect(pid), tag: item[:tag],
                    start_time: format_time(item[:start]), end_time: format_time(item[:end]),
-                   events: format_events(item[:events]))
+                   events: format_events(item[:events])}
     end)
   end
 

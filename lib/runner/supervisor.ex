@@ -74,7 +74,7 @@ defmodule Runner.Supervisor.Sup do
   Main supervisor module, which manages Stash and SubSup.
   """
 
-  use Supervisor.Behaviour
+  use Supervisor
 
   def start_link(_) do
     {:ok, sup} = :supervisor.start_link(__MODULE__, [])
@@ -97,7 +97,7 @@ defmodule Runner.Supervisor.SubSup do
   Sub supervisor module, which manages Worker.
   """
 
-  use Supervisor.Behaviour
+  use Supervisor
 
   def start_link do
     :supervisor.start_link(__MODULE__, [])
@@ -114,7 +114,7 @@ defmodule Runner.Supervisor.Stash do
   Stash module to preserve the actor and number.
   """
 
-  use GenServer.Behaviour
+  use GenServer
   use Runner.Base
 
   @default_value {nil, 0}
@@ -152,7 +152,7 @@ defmodule Runner.Supervisor.Worker do
   Worker module to do some processing based on the requests from childs.
   """
 
-  use GenServer.Behaviour
+  use GenServer
   use Runner.Base
 
   def start_link do

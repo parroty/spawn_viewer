@@ -31,7 +31,7 @@ defmodule Runner.Poolboy do
 end
 
 defmodule Runner.Poolboy.Supervisor do
-  use Supervisor.Behaviour
+  use Supervisor
 
   def start_link do
     :supervisor.start_link(__MODULE__, [])
@@ -54,7 +54,7 @@ defmodule Runner.Poolboy.Supervisor do
 end
 
 defmodule Runner.Poolboy.Worker do
-  use GenServer.Behaviour
+  use GenServer
 
   def start_link(state) do
     :gen_server.start_link(__MODULE__, state, [])

@@ -1,6 +1,6 @@
 # Spawn Viewer
 
-Trial implementation to visualize process spawning.
+Trial implementation to visualize process spawning. It uses phoenix web server.
 
 ## Usage
 
@@ -9,7 +9,7 @@ $ git clone https://github.com/parroty/spawn_viewer
 $ cd spawn_viewer
 $ mix deps.get
 $ mix compile
-$ mix server
+$ mix phoenix.start
 ```
 
 Then, open `http://localhost:4000` in the browser. In the browser, select a function and click `Execute` to draw the graph.
