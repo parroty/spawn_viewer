@@ -1,1 +1,1 @@
-web: MIX_ENV=dev mix phoenix.start
+web: MIX_ENV=dev mix do local.rebar, phoenix.start
