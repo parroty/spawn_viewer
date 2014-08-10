@@ -1,0 +1,6 @@
+{
+  "name": "spawn_viewer",
+  "env": {
+    "BUILDPACK_URL": "https://github.com/HashNuke/heroku-buildpack-elixir.git"
+  }
+}

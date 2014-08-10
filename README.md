@@ -1,4 +1,5 @@
 # Spawn Viewer
+[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 Trial implementation to visualize process spawning. It uses phoenix web server.
 
