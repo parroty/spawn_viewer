@@ -25,7 +25,7 @@ defmodule SpawnViewer.Mixfile do
     [
       {:phoenix, "0.3.0"},
       {:cowboy, "~> 0.10.0", github: "extend/cowboy", optional: true},
-      {:timex, github: "bitwalker/timex"},
+      {:timex, github: "bitwalker/timex", ref: "0.9.0"},
       {:exactor, github: "sasa1977/exactor"},
       {:jsex, github: "talentdeficit/jsex"},
       {:httpotion, github: "myfreeweb/httpotion"},

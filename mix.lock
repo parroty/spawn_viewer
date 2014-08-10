@@ -12,4 +12,4 @@
   "plug": {:package, "0.5.1"},
   "poolboy": {:git, "git://github.com/devinus/poolboy.git", "91cf587b6029be696679a4788905de796ec89df3", []},
   "ranch": {:git, "git://github.com/extend/ranch.git", "3189ef2d47843945efc96c224963380462c33d40", [ref: "0.10.0"]},
-  "timex": {:git, "git://github.com/bitwalker/timex.git", "bc726bbb701d046be211e316567b2fe6342411ec", []}}
+  "timex": {:git, "git://github.com/bitwalker/timex.git", "7e7313e052463ac92f4aacf1845234d2d2832dee", [ref: "0.9.0"]}}
