@@ -1,5 +1,7 @@
 defmodule Store do
-  use ExActor.GenServer, initial_state: HashDict.new
+  use ExActor.GenServer
+
+  definit do: initial_state(HashDict.new)
 
   defcast append(pid, event, time), state: dict do
     do_append(dict, pid, event, time, nil) |> new_state

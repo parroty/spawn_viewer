@@ -1,5 +1,3 @@
-<!DOCTYPE HTML>
-<html>
 <head>
   <title>Spawn Viewer</title>
   <link rel="shortcut icon" href="/static/favicon.ico" />
@@ -123,7 +121,7 @@
     <div class="col-md-3 round-border">
       <h4>Functions</h4>
       <ul class="nav nav-pills nav-stacked">
-        <%= for module <- target_modules do %>
+        <%= for module <- @target_modules do %>
           <li class="list-item" id="<%= module[:name] %>"><a href="#"><%= module[:name] %></a></li>
         <% end %>
       </ul>
@@ -177,5 +175,3 @@
     </div>
   </div>
 </body>
-</html>
-

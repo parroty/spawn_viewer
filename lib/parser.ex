@@ -24,7 +24,7 @@ defmodule Parser do
   end
 
   defp parse_date(date) do
-    "Date(#{date.year}, #{date.month}, #{date.day}, #{date.hour}, #{date.minute}, #{date.second}, #{date.ms})"
+    "Date(#{date.year}, #{date.month}, #{date.day}, #{date.hour}, #{date.minute}, #{date.second}, #{trunc(date.ms)})"
   end
 
   @doc """

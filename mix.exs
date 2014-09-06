@@ -4,7 +4,8 @@ defmodule SpawnViewer.Mixfile do
   def project do
     [ app: :spawn_viewer,
       version: "0.0.1",
-      elixir: "~> 0.14.2",
+      elixir: "~> 1.0.0-rc1",
+      elixirc_paths: ["lib", "web"],
       deps: deps ]
   end
 
@@ -12,7 +13,7 @@ defmodule SpawnViewer.Mixfile do
   def application do
     [
       mod: { SpawnViewer, [] },
-      applications: [:phoenix]
+      applications: [:phoenix, :cowboy, :logger]
     ]
   end
 
@@ -23,9 +24,9 @@ defmodule SpawnViewer.Mixfile do
   # { :barbat, "~> 0.1", github: "elixir-lang/barbat" }
   defp deps do
     [
-      {:phoenix, "0.3.0"},
-      {:cowboy, "~> 0.10.0", github: "extend/cowboy", optional: true},
-      {:timex, github: "bitwalker/timex", ref: "0.9.0"},
+      {:phoenix, "0.4.0"},
+      {:cowboy, "~> 1.0.0"},
+      {:timex, github: "bitwalker/timex", ref: "0.11.0"},
       {:exactor, github: "sasa1977/exactor"},
       {:jsex, github: "talentdeficit/jsex"},
       {:httpotion, github: "myfreeweb/httpotion"},

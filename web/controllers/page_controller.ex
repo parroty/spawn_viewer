@@ -1,9 +1,8 @@
-defmodule SpawnViewer.Controllers.Pages do
+defmodule SpawnViewer.PageController do
   use Phoenix.Controller
 
   def index(conn, _params) do
-    template = SpawnViewer.Templates.index(Config.target_modules)
-    html conn, template
+    render conn, "index", target_modules: Config.target_modules
   end
 
   def analyze(conn, %{"id" => id}) do
@@ -17,11 +16,19 @@ defmodule SpawnViewer.Controllers.Pages do
             {"rows", items},
             {"p", nil}]
 
-    json conn, 200, [counts: Parser.count_row(records), data: data] |> JSEX.encode!
+    json conn, [counts: Parser.count_row(records), data: data] |> JSEX.encode!
   end
 
   def code(conn, %{"id" => id}) do
     code = SpawnViewer.get_code(id)
-    text conn, 200, code
+    text conn, code
+  end
+
+  def not_found(conn, _params) do
+    render conn, "not_found"
+  end
+
+  def error(conn, _params) do
+    render conn, "error"
   end
 end
