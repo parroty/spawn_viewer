@@ -3,7 +3,7 @@
   "exactor": {:git, "git://github.com/sasa1977/exactor.git", "027c8b3a99404a7195e7d64845d1a4db65ae6d6e", []},
   "httpotion": {:git, "git://github.com/myfreeweb/httpotion.git", "1a7d8ac3d5f7c2da5d48496acf3adfc9f73fcc69", []},
   "ibrowse": {:git, "git://github.com/cmullaparthi/ibrowse.git", "7871e2ebe8811efb64e1917e2de455fa87e8dfe3", [tag: "v4.1.0"]},
-  "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "661ce8565aaea22aa3576d4ad5e9d11065fe60f9", []},
+  "jsex": {:git, "git://github.com/talentdeficit/jsex.git", "91fbbb51ac18c5ecec45044af107cd079af2ff8b", []},
   "jsx": {:package, "2.0.4"},
   "linguist": {:package, "0.1.2"},
   "phoenix": {:package, "0.4.0"},
@@ -11,4 +11,4 @@
   "poison": {:package, "1.0.3"},
   "poolboy": {:git, "git://github.com/devinus/poolboy.git", "0d4082dff0e46da7e026e4fe3209784e8ec22fea", []},
   "ranch": {:package, "1.0.0"},
-  "timex": {:git, "git://github.com/bitwalker/timex.git", "adfbb3ead35c47c9fbf4eba2f5b02abe9d761270", [ref: "0.11.0"]}}
+  "timex": {:git, "git://github.com/bitwalker/timex.git", "d179064666d58003e94c6a16c89355a41f323f09", []}}
