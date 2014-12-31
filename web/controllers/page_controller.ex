@@ -16,7 +16,7 @@ defmodule SpawnViewer.PageController do
             {"rows", items},
             {"p", nil}]
 
-    json conn, [counts: Parser.count_row(records), data: data] |> JSEX.encode!
+    json conn, [counts: Parser.count_row(records), data: data] |> JSX.encode!
   end
 
   def code(conn, %{"id" => id}) do
