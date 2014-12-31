@@ -8,7 +8,7 @@ defmodule SpawnViewer do
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
-    HTTPotion.start
+    HTTPoison.start
     Store.start
     Runner.Poolboy.Supervisor.start_link
     Runner.Supervisor.Sup.start_link([])

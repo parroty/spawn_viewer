@@ -29,8 +29,7 @@ defmodule SpawnViewer.Mixfile do
       {:timex, "~> 0.13"},
       {:exactor, "~> 1.0.0"},
       {:exjsx, "~> 3.1"},
-      {:ibrowse, github: "cmullaparthi/ibrowse", tag: "v4.1.0"},
-      {:httpotion, "~> 1.0"},
+      {:httpoison, "~> 0.5"},
       {:poolboy, "~> 1.4"}
     ]
   end
