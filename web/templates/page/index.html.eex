@@ -2,7 +2,8 @@
   <title>Spawn Viewer</title>
   <link rel="shortcut icon" href="/static/favicon.ico" />
   <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_light.min.css">
+
   <style type="text/css">
     .progress-bar.animate {
       width: 100%;
@@ -21,7 +22,6 @@
     #example {
       width: 100%;
     }
-
   </style>
 
   <script src="/static/js/highlight.pack.js"></script>
