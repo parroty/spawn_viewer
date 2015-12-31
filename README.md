@@ -1,6 +1,4 @@
 # Spawn Viewer
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
 Trial implementation to visualize process spawning. It uses phoenix web server.
 
 ## Usage
@@ -16,7 +14,7 @@ $ mix phoenix.server
 Then, open `http://localhost:4000` in the browser. In the browser, select a function and click `Execute` to draw the graph.
 
 ## Sample
-- https://spawn-viewer-sample.herokuapp.com/
+- https://spawn-viewer-sample2.herokuapp.com/
 
 ![htmlimage](https://raw.githubusercontent.com/parroty/spawn_viewer/ead4bdcceb8efc8f36b5cb5750bc7d1cc8a58649/image/spawn_viewer.png?w=600&h450)
 
