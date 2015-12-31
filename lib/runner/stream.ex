@@ -20,9 +20,9 @@ defmodule Runner.Stream do
     event_start(actor, self, tag: "Stream")
 
     range
-      |> Stream.map(&calc_next(&1, actor))
-      |> Stream.map(&calc_next(&1, actor))
-      |> Enum.to_list
+    |> Stream.map(&calc_next(&1, actor))
+    |> Stream.map(&calc_next(&1, actor))
+    |> Enum.to_list
 
     event_end(actor, self, delay: true)
     send pid, :ok
@@ -32,9 +32,9 @@ defmodule Runner.Stream do
     event_start(actor, self, tag: "Enum")
 
     range
-      |> Enum.map(&calc_next(&1, actor))
-      |> Enum.map(&calc_next(&1, actor))
-      |> Enum.to_list
+    |> Enum.map(&calc_next(&1, actor))
+    |> Enum.map(&calc_next(&1, actor))
+    |> Enum.to_list
 
     event_end(actor, self, delay: true)
     send pid, :ok
