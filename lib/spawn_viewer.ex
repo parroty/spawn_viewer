@@ -1,29 +1,40 @@
 defmodule SpawnViewer do
   use Application
 
-  @doc """
-  The application callback used to start this
-  application and its Dynamos.
-  """
+  # See http://elixir-lang.org/docs/stable/elixir/Application.html
+  # for more information on OTP Applications
   def start(_type, _args) do
     import Supervisor.Spec, warn: false
 
     HTTPoison.start
-    Store.start
+    Store.start_link
     Runner.Poolboy.Supervisor.start_link
     Runner.Supervisor.Sup.start_link([])
 
     children = [
-      # Define workers and child supervisors to be supervised
-      # worker(TestApp.Worker, [arg1, arg2, arg3])
+      # Start the endpoint when the application starts
+      supervisor(SpawnViewer.Endpoint, []),
+      # Start the Ecto repository
+      supervisor(SpawnViewer.Repo, []),
+      # Here you could define other workers and supervisors as children
+      # worker(SpawnViewer.Worker, [arg1, arg2, arg3]),
     ]
 
+    # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
+    # for other strategies and supported options
     opts = [strategy: :one_for_one, name: SpawnViewer.Supervisor]
     Supervisor.start_link(children, opts)
   end
 
+  # Tell Phoenix to update the endpoint configuration
+  # whenever the application is updated.
+  def config_change(changed, _new, removed) do
+    SpawnViewer.Endpoint.config_change(changed, removed)
+    :ok
+  end
+
   def run(id) do
-    {:ok, actor} = Store.start
+    {:ok, actor} = Store.start_link
 
     parent = self
     spawn_link(fn ->

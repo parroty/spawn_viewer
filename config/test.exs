@@ -1,16 +1,19 @@
 use Mix.Config
 
-config :phoenix, SpawnViewer.Router,
-  port: System.get_env("PORT") || 4001,
-  ssl: false,
-  cookies: true,
-  session_key: "_spawn_viewer_key",
-  session_secret: "G1RR6GE7J4ZKIQC4K4GM%DCPG05YRK$WGBMS(&DZ#1GRJN)N1I((X%1ZRMDFBO961EDR+"
+# We don't run a server during test. If one is required,
+# you can enable the server option below.
+config :spawn_viewer, SpawnViewer.Endpoint,
+  http: [port: 4001],
+  server: false
 
-config :phoenix, :code_reloader,
-  enabled: true
+# Print only warnings and errors during test
+config :logger, level: :warn
 
-config :logger, :console,
-  level: :debug
-
-
+# Configure your database
+config :spawn_viewer, SpawnViewer.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  username: "postgres",
+  password: "postgres",
+  database: "spawn_viewer_test",
+  hostname: "localhost",
+  pool: Ecto.Adapters.SQL.Sandbox

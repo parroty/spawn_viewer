@@ -1,4 +1,3 @@
 defmodule SpawnViewer.LayoutView do
-  use SpawnViewer.Views
-
+  use SpawnViewer.Web, :view
 end

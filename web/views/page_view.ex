@@ -1,4 +1,3 @@
 defmodule SpawnViewer.PageView do
-  use SpawnViewer.Views
-
+  use SpawnViewer.Web, :view
 end
