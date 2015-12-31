@@ -10,7 +10,7 @@ $ git clone https://github.com/parroty/spawn_viewer
 $ cd spawn_viewer
 $ mix deps.get
 $ mix compile
-$ mix phoenix.start
+$ mix phoenix.server
 ```
 
 Then, open `http://localhost:4000` in the browser. In the browser, select a function and click `Execute` to draw the graph.
