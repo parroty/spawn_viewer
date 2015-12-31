@@ -38,7 +38,7 @@ defmodule SpawnViewer do
 
     parent = self
     spawn_link(fn ->
-      find_module(id).run(actor)
+      find_module(id)[:module].run(actor)
       send parent, :ok
     end)
     wait_completion
@@ -57,13 +57,13 @@ defmodule SpawnViewer do
 
   def get_code(id) do
     module = find_module(id)
-    module.__info__(:compile)[:source] |> File.read!
+    File.read!(module[:src])
   end
 
   defp find_module(id) do
     Enum.find(Config.all_modules, Config.default_module, fn(function) ->
       to_string(function[:name]) == id
-    end) |> Keyword.fetch!(:module)
+    end)
   end
 
   defp format_item(dict) do
