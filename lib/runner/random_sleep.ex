@@ -8,7 +8,7 @@ defmodule Runner.RandomSleep do
   def run(actor) do
     parent = self
 
-    :random.seed(:erlang.now)
+    :random.seed(:os.timestamp)
     values = Enum.map(1..config[:counts], fn(_) -> :random.uniform(config[:counts]) end)
 
     Enum.each(values, fn(v) ->

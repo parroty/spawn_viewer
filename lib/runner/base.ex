@@ -23,7 +23,7 @@ defmodule Runner.Base do
       Record start event for the specifid pid.
       """
       def event_start(actor, pid, options \\ []) do
-        Store.append(actor, pid, :start, :erlang.now, options[:tag])
+        Store.append(actor, pid, :start, :os.timestamp, options[:tag])
         if options[:delay], do: insert_delay
       end
 
@@ -32,14 +32,14 @@ defmodule Runner.Base do
       """
       def event_end(actor, pid, options \\ []) do
         if options[:delay], do: insert_delay
-        Store.append(actor, pid, :end, :erlang.now)
+        Store.append(actor, pid, :end, :os.timestamp)
       end
 
       @doc """
       Put marker string for describing the status of the specified pid.
       """
       def event_marker(actor, pid, marker) do
-        Store.append_marker(actor, pid, :erlang.now, marker)
+        Store.append_marker(actor, pid, :os.timestamp, marker)
       end
 
       @doc """

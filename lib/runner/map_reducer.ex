@@ -34,7 +34,7 @@ defmodule Runner.MapReducer do
   end
 
   defp randomly_sorted_values do
-    :random.seed(:erlang.now)
+    :random.seed(:os.timestamp)
     Enum.sort(1..config[:counts], fn(_,_) -> :random.uniform > 0.5 end)
       |> Enum.zip(1..config[:counts])
   end

@@ -76,7 +76,7 @@ defmodule SpawnViewer do
   end
 
   defp format_time(nil) do
-    format_time(:erlang.now)
+    format_time(:os.timestamp)
   end
 
   defp format_time({_, _, microsec} = time) do
